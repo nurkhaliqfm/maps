@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Google Maps API: Cara Menampilkan Lokasi dengan PHP dan MySQL</title>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUgmfDS3Dc4FmRguXbK_Wmqe9oZOIFoSY&callback=initialize" async defer></script>
+<script type="text/javascript">   
+    var marker;
+    function initialize(){
+        // Variabel untuk menyimpan informasi lokasi
+        var infoWindow = new google.maps.InfoWindow;
+        //  Variabel berisi properti tipe peta
+        var mapOptions = {
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        } 
+        // Pembuatan peta
+        var peta = new google.maps.Map(document.getElementById('googleMap'), mapOptions);      
+		// Variabel untuk menyimpan batas kordinat
+        var bounds = new google.maps.LatLngBounds(); 
+
+     //    marker=new google.maps.Marker({
+	    //     position: new google.maps.LatLng(-2.5827998624958255, 120.80228144146092),
+	    //     map: maps
+	    // });
+        // Pengambilan data dari database MySQL
+        <?php
+		// Sesuaikan dengan konfigurasi koneksi Anda
+			$host 	  = "localhost";
+			$username = "root";
+			$password = "";
+			$Dbname   = "googlemaps";
+			$db 	  = new mysqli($host,$username,$password,$Dbname);
+			
+			$query = $db->query("SELECT * FROM lokasi ORDER BY nama_lokasi ASC");
+			while ($row = $query->fetch_assoc()) {
+				$nama = $row["nama_lokasi"];
+				$lat  = $row["latitude"];
+				$long = $row["longitude"];
+				echo "addMarker($lat, $long, '$nama');\n";
+			}
+        ?> 
+        // Proses membuat marker 
+        function addMarker(lat, lng, info){
+            var lokasi = new google.maps.LatLng(lat, lng);
+            bounds.extend(lokasi);
+            var marker = new google.maps.Marker({
+                map: peta,
+                position: new google.maps.LatLng(-2.5827998624958255, 120.80228144146092),
+            });       
+            peta.fitBounds(bounds);
+            bindInfoWindow(marker, peta, infoWindow, info);
+         }
+        // Menampilkan informasi pada masing-masing marker yang diklik
+        function bindInfoWindow(marker, peta, infoWindow, html){
+            google.maps.event.addListener(marker, 'click', function() {
+            infoWindow.setContent(html);
+            infoWindow.open(peta, marker);
+          });
+        }
+    }
+</script>
+</head>
+<body>
+
+  <div id="googleMap" style="width:1100px;height:500px;"></div>
+  
+</body>
+</html>
