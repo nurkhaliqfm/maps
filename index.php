@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
-    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCUgmfDS3Dc4FmRguXbK_Wmqe9oZOIFoSY&callback=initMap&libraries=&v=weekly"></script>
+    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyCUgmfDS3Dc4FmRguXbK_Wmqe9oZOIFoSY&language=en"></script>
+<!--     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCUgmfDS3Dc4FmRguXbK_Wmqe9oZOIFoSY&callback=initMap&libraries=&v=weekly"></script> -->
 
     <style>
        
